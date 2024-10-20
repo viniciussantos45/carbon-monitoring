@@ -14,7 +14,7 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import { Button } from "./components/ui/button";
+import Dashboard from "./pages/dashboard";
 
 ChartJS.register(
     CategoryScale,
@@ -32,7 +32,7 @@ ChartJS.register(
 const routes = [
     {
         path: "/",
-        element: <Button>home 1,2,3</Button>,
+        element: <Dashboard />,
     },
 ];
 
