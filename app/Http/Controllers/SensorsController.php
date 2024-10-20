@@ -10,7 +10,7 @@ class SensorsController extends Controller
         [
             'id' => 1,
             'name' => 'Sensor 1',
-            'status' => 'Online',
+            'status' => 'online',
             'type' => 'Power Plant',
             'emission_24h' => 50,
             'yearly_usage' => 1200,
@@ -19,12 +19,30 @@ class SensorsController extends Controller
         [
             'id' => 2,
             'name' => 'Sensor 2',
-            'status' => 'Offline',
+            'status' => 'offline',
             'type' => 'Refinery',
             'emission_24h' => 30,
             'yearly_usage' => 900,
             'capacity' => 60,
         ],
+        [
+            'id' => 3,
+            'name' => 'Sensor 3',
+            'status' => 'online',
+            'type' => 'Power Plant',
+            'emission_24h' => 40,
+            'yearly_usage' => 1000,
+            'capacity' => 70,
+        ],
+        [
+            'id' => 4,
+            'name' => 'Sensor 4',
+            'status' => 'offline',
+            'type' => 'Refinery',
+            'emission_24h' => 20,
+            'yearly_usage' => 800,
+            'capacity' => 50,
+        ]
 
     ];
 
