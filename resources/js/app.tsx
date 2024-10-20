@@ -1,4 +1,3 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -15,6 +14,7 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
+import { Button } from "./components/ui/button";
 
 ChartJS.register(
     CategoryScale,
@@ -32,7 +32,7 @@ ChartJS.register(
 const routes = [
     {
         path: "/",
-        element: <div>home 1,2,3</div>,
+        element: <Button>home 1,2,3</Button>,
     },
 ];
 

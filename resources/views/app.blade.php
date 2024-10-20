@@ -6,9 +6,8 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         @viteReactRefresh
-        @vite(
-            'resources/js/app.tsx'
-        )
+        @vite(['resources/css/app.css', 'resources/js/app.tsx'])
+
     </head>
 
     <body class="antialiased">
