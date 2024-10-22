@@ -2,10 +2,13 @@ import { ChartData, ScriptableContext } from "chart.js";
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
-import DualSidedStaffGauge from "./rule";
+import DualSidedStaffGauge from "./ruler";
 
 type LineChartProps = {
-    data: { labels: string[]; data: number[] };
+    data: {
+        labels: string[];
+        datasets: { label: string; data: number[] }[];
+    };
 };
 
 type CtxGetGradient = {
@@ -64,30 +67,27 @@ const LineChart = ({ data }: LineChartProps) => {
 
     const chartData: ChartData<"line", number[], string> = {
         labels: data.labels,
-        datasets: [
-            {
-                label: "Emissions Over Time",
-                animation: { easing: "easeOutQuad" },
-                data: data.data,
-                fill: false,
-                pointStyle: "circle",
-                backgroundColor: (context) => {
-                    const { ctx, chartArea } = context.chart;
-                    return chartArea ? getGradient(ctx, chartArea) : undefined;
-                },
-                borderJoinStyle: "bevel",
-                tension: 0.3,
-                borderColor: (context) => {
-                    const { ctx, chartArea } = context.chart;
-                    return chartArea ? getGradient(ctx, chartArea) : undefined;
-                },
-                pointRadius: getPointRadius as any,
+        datasets: data.datasets.map((dataset) => ({
+            ...dataset,
+            animation: { easing: "easeOutQuad" },
+            fill: false,
+            pointStyle: "circle",
+            backgroundColor: (context) => {
+                const { ctx, chartArea } = context.chart;
+                return chartArea ? getGradient(ctx, chartArea) : undefined;
             },
-        ],
+            borderJoinStyle: "bevel",
+            tension: 0.3,
+            borderColor: (context) => {
+                const { ctx, chartArea } = context.chart;
+                return chartArea ? getGradient(ctx, chartArea) : undefined;
+            },
+            pointRadius: getPointRadius as any,
+        })),
     };
 
     return (
-        <div className="relative bg-white rounded p-4">
+        <div className="relative bg-white rounded">
             <Line
                 data={chartData}
                 options={{
@@ -98,7 +98,7 @@ const LineChart = ({ data }: LineChartProps) => {
                                 label: (tooltipItem) => {
                                     const emissions = tooltipItem.dataset
                                         .data as number[];
-                                    return `${tooltipItem.dataset.label} ${
+                                    return `${tooltipItem.dataset.label} - ${
                                         emissions[tooltipItem.dataIndex]
                                     } kg`;
                                 },
@@ -135,6 +135,7 @@ const LineChart = ({ data }: LineChartProps) => {
                 gapDistance={1}
                 maxNumber={maxNumber}
                 startNumber={startNumber}
+                startPX={0} // Pass the start pixel value
             />
         </div>
     );

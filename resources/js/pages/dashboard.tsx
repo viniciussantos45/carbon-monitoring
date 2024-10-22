@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import LineChart from "@/components/pages/dashboard/line-chart";
 import MetricCards from "@/components/pages/dashboard/metric-chart";
 import SensorTable from "@/components/pages/dashboard/sensor-table";
@@ -31,11 +32,32 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-8">
+            <Header />
             <MetricCards data={emissionsData} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                <LineChart data={emissionsData.emissions_over_time} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">
                 <div>
+                    <h3 className="text-lg font-semibold text-gray-600 mb-10">
+                        Emissions over time and power plant emissions
+                    </h3>
+                    <LineChart
+                        data={{
+                            labels: emissionsData.emissions_over_time.labels,
+                            datasets: [
+                                {
+                                    label: "Emissions over time",
+                                    data: emissionsData.emissions_over_time
+                                        .data,
+                                },
+                                {
+                                    label: "Power plant",
+                                    data: emissionsData.power_plant.data,
+                                },
+                            ],
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col gap-4">
                     <RatioCard
                         title="CO2 Ratio"
                         isPercentage
@@ -79,8 +101,10 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
+            <h3 className="text-lg font-semibold text-gray-600 mb-4">
+                Sensors
+            </h3>
             <SensorTable sensors={sensorsData.sensors} />
-            {/* <AddNewObjectModal setSensorsData={setSensorsData} /> */}
         </div>
     );
 };

@@ -4,9 +4,14 @@ export interface Co2Levels {
     good: number;
 }
 
-export interface EmissionsOverTime {
+export interface ChartData {
     labels: string[];
     data: number[];
+}
+
+export interface RatioChartData {
+    sector: string;
+    emissions: number;
 }
 
 export interface EmissionsData {
@@ -14,7 +19,9 @@ export interface EmissionsData {
     monthly: number;
     average: number;
     co2_levels: Co2Levels;
-    emissions_over_time: EmissionsOverTime;
+    emissions_over_time: ChartData;
+    power_plant: ChartData;
+    emissions_by_sector: RatioChartData;
 }
 
 export interface Sensor {
