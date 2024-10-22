@@ -1,11 +1,15 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Sensor } from "@/types/services";
 import { CheckIcon, Cross2Icon, MinusCircledIcon } from "@radix-ui/react-icons";
 import { DataTableColumnHeader } from "./column-header";
-import { DataTableRowActions } from "./row-actions";
+
+const colorMap: Record<string, string> = {
+    red: "border-red-300 text-red-500 bg-red-50",
+    green: "border-green-300 text-green-500 bg-green-50",
+    orange: "border-orange-300 text-orange-500 bg-orange-50",
+};
 
 const statuses = [
     { value: "online", label: "Online", color: "green", icon: CheckIcon },
@@ -25,33 +29,15 @@ const statuses = [
 
 export const columns: ColumnDef<Sensor>[] = [
     {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected()
-                        ? true
-                        : table.getIsSomePageRowsSelected()
-                        ? "indeterminate"
-                        : false
-                }
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <div className="flex align-middle">
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            </div>
+        accessorKey: "id",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="ID" />
         ),
         enableSorting: false,
         enableHiding: false,
+        cell: ({ row }) => (
+            <span className="text-gray-500">{row.getValue("id")}</span>
+        ),
     },
     {
         accessorKey: "name",
@@ -61,6 +47,8 @@ export const columns: ColumnDef<Sensor>[] = [
         cell: ({ row }) => (
             <div className="font-normal">{row.getValue("name")}</div>
         ),
+
+        enableSorting: false,
     },
     {
         accessorKey: "status",
@@ -74,16 +62,18 @@ export const columns: ColumnDef<Sensor>[] = [
             if (!status) return null;
 
             return (
-                <div className="flex items-center">
+                <div className="flex items-center" key={row.id}>
                     <Badge
                         variant="outline"
-                        className={`font-normal border-${status.color}-300 text-${status.color}-500`}
+                        className={`font-normal ${colorMap[status.color]}`}
                     >
                         {status.label}
                     </Badge>
                 </div>
             );
         },
+
+        enableSorting: false,
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id));
         },
@@ -94,6 +84,7 @@ export const columns: ColumnDef<Sensor>[] = [
             <DataTableColumnHeader column={column} title="Type" />
         ),
         cell: ({ row }) => <span>{row.getValue("type")}</span>,
+        enableSorting: false,
     },
     {
         accessorKey: "emission_24h",
@@ -101,6 +92,7 @@ export const columns: ColumnDef<Sensor>[] = [
             <DataTableColumnHeader column={column} title="Emissions (24h)" />
         ),
         cell: ({ row }) => <span>{row.getValue("emission_24h")}</span>,
+        enableSorting: false,
     },
     {
         accessorKey: "yearly_usage",
@@ -108,6 +100,7 @@ export const columns: ColumnDef<Sensor>[] = [
             <DataTableColumnHeader column={column} title="Yearly Usage" />
         ),
         cell: ({ row }) => <span>{row.getValue("yearly_usage")}</span>,
+        enableSorting: false,
     },
     {
         accessorKey: "capacity",
@@ -115,9 +108,6 @@ export const columns: ColumnDef<Sensor>[] = [
             <DataTableColumnHeader column={column} title="Capacity (%)" />
         ),
         cell: ({ row }) => <span>{row.getValue("capacity")}%</span>,
-    },
-    {
-        id: "actions",
-        cell: ({ row }) => <DataTableRowActions row={row} />,
+        enableSorting: false,
     },
 ];

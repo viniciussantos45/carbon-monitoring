@@ -19,7 +19,7 @@ class EmissionsController extends Controller
             ],
             'emissions_over_time' => [
                 'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                'data' => [100, 150, 200, 250, 300],
+                'data' => [100, 150, 200, 250, 200],
             ],
         ];
 

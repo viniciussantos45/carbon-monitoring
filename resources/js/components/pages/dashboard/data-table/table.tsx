@@ -19,7 +19,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "./pagination";
-import { DataTableToolbar } from "./toolbar";
 
 interface DataTableProps<TData, TValue = unknown> {
     columns: ColumnDef<TData, TValue>[];
@@ -57,7 +56,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="space-y-4">
-            <DataTableToolbar table={table} />
+            {/* <DataTableToolbar table={table} /> */}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
