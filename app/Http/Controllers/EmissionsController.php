@@ -2,47 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\EmissionService;
 use Illuminate\Http\Request;
-
-enum EmissionsSectorEnum: string {
-    case power_plant = 'power_plant';
-    case refinery = 'refinery';
-    case transportation = 'transportation';
-    case agriculture = 'agriculture';
-}
 
 class EmissionsController extends Controller
 {
+    protected $emissionService;
+
+    public function __construct(EmissionService $emissionService)
+    {
+        $this->emissionService = $emissionService;
+    }
+
+    public function index()
+    {
+        $emissions = $this->emissionService->getAllEmissions();
+        return response()->json($emissions);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'date' => 'required|date',
+            'sector_id' => 'required|exists:sectors,id',
+            'emission_value' => 'required|numeric',
+        ]);
+
+        $emission = $this->emissionService->createEmission($data);
+
+        return response()->json($emission, 201);
+    }
+
+    public function show($id)
+    {
+        $emission = $this->emissionService->getEmission($id);
+        return response()->json($emission);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'date' => 'sometimes|date',
+            'sector_id' => 'sometimes|exists:sectors,id',
+            'emission_value' => 'sometimes|numeric',
+        ]);
+
+        $emission = $this->emissionService->updateEmission($id, $data);
+
+        return response()->json($emission);
+    }
+
+    public function destroy($id)
+    {
+        $this->emissionService->deleteEmission($id);
+        return response()->json(null, 204);
+    }
+
     public function getEmissionsData()
     {
         $data = [
-            'daily' => 150,
-            'monthly' => 4000,
-            'average' => 200,
-            'co2_levels' => [
-                'poor' => 30,
-                'normal' => 50,
-                'good' => 20,
-            ],
-            'emissions_over_time' => [
-                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                'data' => [100, 150, 200, 250, 200],
-            ],
-            'power_plant' => [
-                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                'data' => [50, 60, 70, 80, 90],
-            ],
-            'refinery' => [
-                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                'data' => [30, 40, 50, 60, 70],
-            ],
-            'emissions_by_sector' => [
-                [ 'sector' => EmissionsSectorEnum::power_plant, 'emissions' => 50 ],
-                [ 'sector' => EmissionsSectorEnum::refinery, 'emissions' => 30 ],
-                [ 'sector' => EmissionsSectorEnum::transportation, 'emissions' => 20 ],
-                [ 'sector' => EmissionsSectorEnum::agriculture, 'emissions' => 10 ],
-            ],
-
+            'daily' => $this->emissionService->getDailyEmissions(),
+            'monthly' => $this->emissionService->getMonthlyEmissions(),
+            'average' => $this->emissionService->getAverageEmissions(),
+            'co2_levels' => $this->emissionService->getCO2Levels(),
+            'emissions_over_time' => $this->emissionService->getEmissionsOverTime(),
+            'emissions_by_sector' => $this->emissionService->getEmissionsBySector(),
+            'emissions_by_sector_and_month' => $this->emissionService->getEmissionsBySectorAndMonth(),
         ];
 
         return response()->json($data);

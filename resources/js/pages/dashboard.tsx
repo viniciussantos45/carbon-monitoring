@@ -2,6 +2,12 @@ import Header from "@/components/header";
 import LineChart from "@/components/pages/dashboard/line-chart";
 import MetricCards from "@/components/pages/dashboard/metric-chart";
 import SensorTable from "@/components/pages/dashboard/sensor-table";
+import {
+    co2LevelsColors,
+    co2LevelsLabels,
+    emissionBySectorColors,
+    labelsMap,
+} from "@/components/pages/dashboard/utils/mappers";
 import RatioCard from "@/components/ratio-card";
 import { EmissionsData, SensorsData } from "@/types/services";
 import axios from "axios";
@@ -43,17 +49,13 @@ const Dashboard = () => {
                     <LineChart
                         data={{
                             labels: emissionsData.emissions_over_time.labels,
-                            datasets: [
-                                {
-                                    label: "Emissions over time",
-                                    data: emissionsData.emissions_over_time
-                                        .data,
-                                },
-                                {
-                                    label: "Power plant",
-                                    data: emissionsData.power_plant.data,
-                                },
-                            ],
+                            datasets:
+                                emissionsData.emissions_by_sector_and_month.map(
+                                    (emission) => ({
+                                        label: labelsMap[emission.sector],
+                                        data: emission.data,
+                                    })
+                                ),
                         }}
                     />
                 </div>
@@ -61,43 +63,25 @@ const Dashboard = () => {
                     <RatioCard
                         title="CO2 Ratio"
                         isPercentage
-                        items={[
-                            {
-                                label: "Poor",
-                                value: 45,
-                                color: "red",
-                            },
-                            {
-                                label: "Normal",
-                                value: 30,
-                                color: "orange",
-                            },
-                            {
-                                label: "Good",
-                                value: 25,
-                                color: "green",
-                            },
-                        ]}
+                        items={(
+                            Object.keys(emissionsData.co2_levels) as Array<
+                                keyof typeof co2LevelsLabels
+                            >
+                        ).map((key) => ({
+                            label: co2LevelsLabels[key],
+                            value: emissionsData.co2_levels[key],
+                            color: co2LevelsColors[key],
+                        }))}
                     />
                     <RatioCard
                         title="Ratio of sensor types"
-                        items={[
-                            {
-                                label: "Power Plant",
-                                value: 540,
-                                color: "purple",
-                            },
-                            {
-                                label: "Steel Plant",
-                                value: 276,
-                                color: "darkBlue",
-                            },
-                            {
-                                label: "Airport",
-                                value: 252,
-                                color: "lightBlue",
-                            },
-                        ]}
+                        items={emissionsData.emissions_by_sector.map(
+                            (emission) => ({
+                                label: labelsMap[emission.sector],
+                                value: emission.emissions,
+                                color: emissionBySectorColors[emission.sector],
+                            })
+                        )}
                     />
                 </div>
             </div>

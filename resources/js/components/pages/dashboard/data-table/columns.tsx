@@ -91,7 +91,7 @@ export const columns: ColumnDef<Sensor>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Emissions (24h)" />
         ),
-        cell: ({ row }) => <span>{row.getValue("emission_24h")}</span>,
+        cell: ({ row }) => <span>{row.getValue("emission_24h")}kg</span>,
         enableSorting: false,
     },
     {
@@ -99,7 +99,7 @@ export const columns: ColumnDef<Sensor>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Yearly Usage" />
         ),
-        cell: ({ row }) => <span>{row.getValue("yearly_usage")}</span>,
+        cell: ({ row }) => <span>{row.getValue("yearly_usage")}mt</span>,
         enableSorting: false,
     },
     {

@@ -2,58 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SensorService;
 use Illuminate\Http\Request;
 
 class SensorsController extends Controller
 {
-    private $sensors = [
-        [
-            'id' => 1,
-            'name' => 'Sensor 1',
-            'status' => 'online',
-            'type' => 'Power Plant',
-            'emission_24h' => 50,
-            'yearly_usage' => 1200,
-            'capacity' => 80,
-        ],
-        [
-            'id' => 2,
-            'name' => 'Sensor 2',
-            'status' => 'offline',
-            'type' => 'Refinery',
-            'emission_24h' => 30,
-            'yearly_usage' => 900,
-            'capacity' => 60,
-        ],
-        [
-            'id' => 3,
-            'name' => 'Sensor 3',
-            'status' => 'online',
-            'type' => 'Power Plant',
-            'emission_24h' => 40,
-            'yearly_usage' => 1000,
-            'capacity' => 70,
-        ],
-        [
-            'id' => 4,
-            'name' => 'Sensor 4',
-            'status' => 'offline',
-            'type' => 'Refinery',
-            'emission_24h' => 20,
-            'yearly_usage' => 800,
-            'capacity' => 50,
-        ]
+    protected $sensorService;
 
-    ];
+    public function __construct(SensorService $sensorService)
+    {
+        $this->sensorService = $sensorService;
+    }
+
+    public function index()
+    {
+        $sensors = $this->sensorService->getAllSensors();
+        return response()->json($sensors);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'status' => 'required|string',
+            'type' => 'required|string',
+            'emission_24h' => 'required|numeric',
+            'yearly_usage' => 'required|numeric',
+            'capacity' => 'required|numeric',
+        ]);
+
+        $sensor = $this->sensorService->createSensor($data);
+
+        return response()->json($sensor, 201);
+    }
+
+    public function show($id)
+    {
+        $sensor = $this->sensorService->getSensor($id);
+        return response()->json($sensor);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'name' => 'sometimes|string',
+            'status' => 'sometimes|string',
+            'type' => 'sometimes|string',
+            'emission_24h' => 'sometimes|numeric',
+            'yearly_usage' => 'sometimes|numeric',
+            'capacity' => 'sometimes|numeric',
+        ]);
+
+        $sensor = $this->sensorService->updateSensor($id, $data);
+
+        return response()->json($sensor);
+    }
+
+    public function destroy($id)
+    {
+        $this->sensorService->deleteSensor($id);
+        return response()->json(null, 204);
+    }
 
     public function getSensorsData()
     {
         $data = [
-            'sensor_types' => [
-                ['type' => 'Power Plant', 'quantity' => 5],
-                ['type' => 'Refinery', 'quantity' => 3],
-            ],
-            'sensors' => $this->sensors,
+            'sensor_types' => $this->sensorService->getSensorTypes(),
+            'sensors' => $this->sensorService->getAllSensors(),
         ];
 
         return response()->json($data);
@@ -61,13 +76,6 @@ class SensorsController extends Controller
 
     public function addSensor(Request $request)
     {
-        $sensor = $request->all();
-        $sensor['id'] = count($this->sensors) + 1;
-        $this->sensors[] = $sensor;
-
-        return response()->json([
-            'message' => 'Sensor added successfully',
-            'sensor' => $sensor,
-        ], 201);
+        return $this->store($request);
     }
 }

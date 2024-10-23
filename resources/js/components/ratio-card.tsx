@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-const gradientColors = {
+export const gradientColors = {
     red: "from-red-400 to-red-600",
     yellow: "from-yellow-400 to-yellow-600",
     green: "from-green-400 to-green-600",

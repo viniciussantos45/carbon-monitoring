@@ -22,7 +22,7 @@ const DualSidedStaffGauge: React.FC<DualSidedStaffGaugeProps> = ({
 
     return (
         <div
-            className="flex flex-col gap-1.5 items-center absolute  bg-opacity-50 backdrop-blur-[3px]"
+            className="flex flex-col gap-2 items-center absolute  bg-opacity-50 backdrop-blur-[3px]"
             style={{ bottom: `${startPX}px` }}
         >
             {numbers.reverse().map((number, index) => (

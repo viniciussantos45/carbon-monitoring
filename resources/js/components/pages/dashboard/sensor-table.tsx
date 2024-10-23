@@ -15,7 +15,7 @@ type SensorTableProps = {
 };
 
 const SensorTable = ({ sensors }: SensorTableProps) => {
-    return <DataTable data={sensors} columns={columns} />;
+    return <DataTable data={sensors} columns={columns as any} />;
 };
 
 export default SensorTable;

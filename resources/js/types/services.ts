@@ -1,3 +1,10 @@
+export enum Sector {
+    PowerPlant = "power_plant",
+    Refinery = "refinery",
+    Transportation = "transportation",
+    Agriculture = "agriculture",
+}
+
 export interface Co2Levels {
     poor: number;
     normal: number;
@@ -10,7 +17,7 @@ export interface ChartData {
 }
 
 export interface RatioChartData {
-    sector: string;
+    sector: Sector;
     emissions: number;
 }
 
@@ -21,7 +28,12 @@ export interface EmissionsData {
     co2_levels: Co2Levels;
     emissions_over_time: ChartData;
     power_plant: ChartData;
-    emissions_by_sector: RatioChartData;
+    emissions_by_sector: RatioChartData[];
+    emissions_by_sector_and_month: {
+        sector: Sector;
+        labels: string[];
+        data: number[];
+    }[];
 }
 
 export interface Sensor {
