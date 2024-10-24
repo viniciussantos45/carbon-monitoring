@@ -5,6 +5,9 @@ import { defineConfig } from "vite";
 import path from "node:path";
 
 export default defineConfig({
+    ...(process.env.APP_ENV === "production" && {
+        base: "https://carbon-monitoring.onrender.com/",
+    }),
     server: {
         hmr: process.env.APP_ENV === "local",
     },
