@@ -38,13 +38,16 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:10000/' /etc/apache2/sites-available/000-default.conf
+
 COPY --from=composer /app /var/www/html
 
 COPY --from=nodebuilder /app/public/build /var/www/html/public/build
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database /var/www/html/public/build
 
-EXPOSE 80
+EXPOSE 10000
 
 COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
 
