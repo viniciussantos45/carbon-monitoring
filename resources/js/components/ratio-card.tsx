@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 export const gradientColors = {
-    red: "from-red-400 to-red-600",
-    yellow: "from-yellow-400 to-yellow-600",
-    green: "from-green-400 to-green-600",
-    orange: "from-orange-400 to-orange-600",
-    purple: "from-purple-400 to-purple-600",
-    lightBlue: "from-blue-300 to-blue-500",
-    darkBlue: "from-blue-700 to-blue-900",
+    red: "from-red-400 to-red-500",
+    yellow: "from-yellow-400 to-yellow-500",
+    green: "from-green-400 to-green-500",
+    orange: "from-orange-400 to-orange-500",
+    purple: "from-purple-400 to-purple-500",
+    lightBlue: "from-blue-300 to-blue-400",
+    darkBlue: "from-blue-700 to-blue-800",
 };
 
 const labelColors: Record<keyof typeof gradientColors, string> = {

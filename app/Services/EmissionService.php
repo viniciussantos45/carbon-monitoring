@@ -39,8 +39,8 @@ class EmissionService
     public function getEmissionsOverTime()
     {
         $emissions = Emission::select(
-            DB::raw('MONTHNAME(date) as month'),
-            DB::raw('MONTH(date) as month_number'),
+            DB::raw('strftime("%m", date) as month'),
+            DB::raw('CAST(strftime("%m", date) as INTEGER) as month_number'),
             DB::raw('SUM(emission_value) as total')
         )
         ->groupBy('month_number', 'month')
@@ -72,8 +72,8 @@ class EmissionService
     {
         $emissions = Emission::select(
             'sector_id',
-            DB::raw('MONTH(date) as month_number'),
-            DB::raw('MONTHNAME(date) as month'),
+            DB::raw('CAST(strftime("%m", date) as INTEGER) as month_number'),
+            DB::raw('strftime("%m", date) as month'),
             DB::raw('SUM(emission_value) as emissions')
         )
         ->groupBy('sector_id', 'month_number', 'month')

@@ -1,5 +1,5 @@
 import { ChartData, ScriptableContext } from "chart.js";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 import DualSidedStaffGauge from "./ruler";
@@ -64,6 +64,14 @@ const LineChart = ({ data }: LineChartProps) => {
     const stepSize = 30;
     const [maxNumber, setMaxNumber] = useState(200);
     const [startNumber, setStartNumber] = useState(100);
+    const chartRef = useRef<any>(null);
+    const [chartHeight, setChartHeight] = useState(0);
+
+    useEffect(() => {
+        if (chartRef.current) {
+            setChartHeight(chartRef.current?.height || 0);
+        }
+    }, [chartRef]);
 
     const chartData: ChartData<"line", number[], string> = {
         labels: data.labels,
@@ -89,6 +97,7 @@ const LineChart = ({ data }: LineChartProps) => {
     return (
         <div className="relative bg-white rounded">
             <Line
+                ref={chartRef}
                 data={chartData}
                 options={{
                     plugins: {
@@ -132,10 +141,10 @@ const LineChart = ({ data }: LineChartProps) => {
             />
             <DualSidedStaffGauge
                 gap={stepSize}
-                gapDistance={1}
                 maxNumber={maxNumber}
                 startNumber={startNumber}
                 startPX={0} // Pass the start pixel value
+                height={chartHeight} // Pass the chart height
             />
         </div>
     );
