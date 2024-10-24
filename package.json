@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "APP_ENV=production vite build",
         "dev": "vite"
     },
     "devDependencies": {

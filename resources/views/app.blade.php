@@ -3,9 +3,11 @@
     <head>
         <meta charset="utf-8">
         <title>My App</title>
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        @viteReactRefresh
+        @if (app()->isLocal())
+            @viteReactRefresh
+        @endif
+
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])
 
     </head>

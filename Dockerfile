@@ -15,6 +15,8 @@ COPY . .
 # Build assets using Vite
 RUN npm run build
 
+RUN cp /app/public/build/.vite/manifest.json /app/public/build/manifest.json
+
 # Stage 2: Install Composer dependencies
 FROM composer:2 as composer
 

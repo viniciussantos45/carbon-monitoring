@@ -6,16 +6,14 @@ import path from "node:path";
 
 export default defineConfig({
     server: {
-        hmr: {
-            host: "localhost",
-        },
+        hmr: process.env.APP_ENV === "local",
     },
 
     build: {
         manifest: true,
         outDir: "public/build",
         rollupOptions: {
-            input: "resources/js/app.tsx",
+            input: ["resources/css/app.css", "resources/js/app.tsx"],
         },
     },
     plugins: [
