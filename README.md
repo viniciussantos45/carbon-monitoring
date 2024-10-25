@@ -1,5 +1,7 @@
 # Carbon Monitoring
 
+[Click to see on deploy](https://carbon-monitoring.onrender.com)
+
 ## Overview
 
 Carbon Monitoring is a web application designed to provide real-time monitoring and visualization of carbon emissions. The application is built using Laravel for the backend, React for the frontend, and Docker for containerization. It leverages Vite for the build process, ShadCN for UI components, and Chart.js for data visualization.
