@@ -1,66 +1,167 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Carbon Monitoring
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+Carbon Monitoring is a web application designed to provide real-time monitoring and visualization of carbon emissions. The application is built using Laravel for the backend, React for the frontend, and Docker for containerization. It leverages Vite for the build process, ShadCN for UI components, and Chart.js for data visualization.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Overview
+- Features
+- Prerequisites
+- Installation
+- Usage
+- Testing
+- Contributing
+- License
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- Real-time data visualization with charts
+- User authentication
+- RESTful API
+- Dockerized environment for development and production
+- Unit and feature tests
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Prerequisites
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Docker
+- Docker Compose
+- Node.js
+- npm or yarn
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+1. Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```sh
+    git clone https://github.com/your-repo/carbon-monitoring.git
+    cd carbon-monitoring
+    ```
 
-### Premium Partners
+2. Copy the example environment file and configure it:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```sh
+    cp .env.example .env
+    ```
+
+3. Build and start the Docker containers using Laravel Sail:
+
+    ```sh
+    ./vendor/bin/sail up -d
+    ```
+
+4. Install PHP dependencies:
+
+    ```sh
+    ./vendor/bin/sail composer install
+    ```
+
+5. Install Node.js dependencies:
+
+    ```sh
+    ./vendor/bin/sail npm install
+    ```
+
+6. Run database migrations and seeders:
+
+    ```sh
+    ./vendor/bin/sail artisan migrate --seed
+    ```
+
+## Usage
+
+- Access the application at `http://localhost:10000`
+- API documentation can be found at `http://localhost:10000/api/documentation`
+
+## Testing
+
+To run tests, use the following command:
+
+```sh
+./vendor/bin/sail artisan test
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Thank you for considering contributing to this project! Please read the [contribution guide](https://laravel.com/docs/contributions) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Technologies Used
+
+- **Laravel**: Backend framework
+- **React**: Frontend library
+- **Vite**: Build tool
+- **ShadCN**: UI components
+- **Chart.js**: Data visualization
+- **Docker**: Containerization
+- **Laravel Sail**: Docker development environment for Laravel
+
+## Project Structure
+
+```
+.dockerignore
+.editorconfig
+.env
+.env.example
+.env.prod-bkp
+.gitattributes
+.gitignore
+app/
+ Enums/
+ Http/
+ Models/
+ Providers/
+ Services/
+artisan
+bootstrap/
+ app.php
+ cache/
+ ...
+components.json
+composer.json
+composer.lock
+config/
+database/
+docker-compose.yml
+docker-entrypoint.sh
+docker.env
+Dockerfile
+nginx.conf
+package.json
+phpunit.xml
+postcss.config.js
+public/
+README.md
+resources/
+routes/
+storage/
+tailwind.config.js
+tests/
+tsconfig.json
+tsconfig.node.json
+vendor/
+vite-env.d.ts
+vite.config.ts
+```
+
+## Environment Variables
+
+Here are some important environment variables used in this project:
+
+- **APP_ENV**: The application environment (e.g., local, production)
+- **APP_KEY**: The application key
+- **APP_DEBUG**: Debug mode (true/false)
+- **APP_URL**: The application URL
+- **DB_CONNECTION**: Database connection type (e.g., mysql, sqlite)
+- **DB_HOST**: Database host
+- **DB_PORT**: Database port
+- **DB_DATABASE**: Database name
+- **DB_USERNAME**: Database username
+- **DB_PASSWORD**: Database password
+- **VITE_URL**: Vite development server URL
+
+For a full list of environment variables, refer to the `.env.example` file.

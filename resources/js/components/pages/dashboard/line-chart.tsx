@@ -61,15 +61,16 @@ const getPointRadius = (context: ScriptableContext<"line">) => {
 };
 
 const LineChart = ({ data }: LineChartProps) => {
-    const stepSize = 30;
     const [maxNumber, setMaxNumber] = useState(200);
     const [startNumber, setStartNumber] = useState(100);
     const chartRef = useRef<any>(null);
     const [chartHeight, setChartHeight] = useState(0);
+    const [stepSize, setStepSize] = useState(50);
 
     useEffect(() => {
         if (chartRef.current) {
             setChartHeight(chartRef.current?.height || 0);
+            setStepSize(maxNumber / 4);
         }
     }, [chartRef]);
 
