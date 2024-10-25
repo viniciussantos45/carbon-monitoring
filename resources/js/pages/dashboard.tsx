@@ -38,7 +38,7 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="p-8">
+        <div className="p-4 md:p-8">
             <Header />
             <MetricCards data={emissionsData} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">

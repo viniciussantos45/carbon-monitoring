@@ -3,7 +3,7 @@ import { FaLeaf } from "react-icons/fa";
 const Header = () => {
     return (
         <header className="bg-gradient-to-r from-green-600 to-green-400 text-white p-6 rounded-lg shadow-md mb-8">
-            <div className="container mx-auto flex justify-between items-center">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-3">
                     <FaLeaf className="text-4xl" />
                     <div>
