@@ -1,18 +1,1 @@
-name: Carbon Monitoring
 
-on:
-  schedule:
-    # Run the workflow every 25 minutes
-    - cron: '*/25 * * * *'
-
-jobs:
-  monitor-carbon:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Call Carbon Monitoring API 3 times with 5 seconds delay
-        run: |
-          for i in {1..3}; do
-            echo "Request $i:"
-            curl -X GET "https://carbon-monitoring.onrender.com/api"
-            sleep 5
-          done
